@@ -1,5 +1,7 @@
 package com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal;
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
@@ -12,8 +14,10 @@ public class EmbeddedDynamoDBClientFactory {
     public AmazonDynamoDB create(int embeddedDynamoDBPort) {
         return AmazonDynamoDBClientBuilder.standard()
                 .withEndpointConfiguration(
-                        getEndpointConfiguration(embeddedDynamoDBPort)
-                )
+                        getEndpointConfiguration(embeddedDynamoDBPort))
+                .withCredentials(
+                        new AWSStaticCredentialsProvider(
+                                new BasicAWSCredentials("dummy", "dummy")))
                 .build();
     }
 

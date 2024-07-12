@@ -4,25 +4,23 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.amazonaws.services.dynamodbv2.model.*;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.EmbeddedDynamoDbInitializer;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.InjectEmbeddedDynamoDbClient;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.WithEmbeddedDynamoDb;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.EmbeddedDynamoDBClientFactory;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Objects;
 
-import static com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.examples.Example3.ProductsDataInitializer;
-import static com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.examples.Example3.ProductsTableInitializer;
+import static com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.examples.Example6.ProductsDataInitializer;
+import static com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.examples.Example6.ProductsTableInitializer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@WithEmbeddedDynamoDb(embeddedDynamoDbInitializers = {ProductsTableInitializer.class, ProductsDataInitializer.class})
-public class Example3 {
-    @InjectEmbeddedDynamoDbClient
-    private AmazonDynamoDB embeddedDynamoDBClient;
-
+@WithEmbeddedDynamoDb(port = 8321, embeddedDynamoDbInitializers = {ProductsTableInitializer.class, ProductsDataInitializer.class})
+public class Example6 {
     @Test
     void shouldSaveProductData() {
         // given
+        AmazonDynamoDB embeddedDynamoDBClient = new EmbeddedDynamoDBClientFactory().create(8321);
         DynamoDBMapper dynamoDBMapper = new DynamoDBMapper(embeddedDynamoDBClient);
 
         // when

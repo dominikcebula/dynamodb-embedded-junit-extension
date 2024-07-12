@@ -1,6 +1,6 @@
 package com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.examples;
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @WithEmbeddedDynamoDb
 public class Example1 {
     @InjectEmbeddedDynamoDbClient
-    private AmazonDynamoDBClient embeddedDynamoDBClient;
+    private AmazonDynamoDB embeddedDynamoDBClient;
 
     @Test
     void shouldSaveProductData() {

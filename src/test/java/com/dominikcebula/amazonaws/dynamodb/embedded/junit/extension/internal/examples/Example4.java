@@ -11,12 +11,12 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Objects;
 
-import static com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.examples.Example3.ProductsDataInitializer;
-import static com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.examples.Example3.ProductsTableInitializer;
+import static com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.examples.Example4.ProductsDataInitializer;
+import static com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.examples.Example4.ProductsTableInitializer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@WithEmbeddedDynamoDb(embeddedDynamoDbInitializers = {ProductsTableInitializer.class, ProductsDataInitializer.class})
-public class Example3 {
+@WithEmbeddedDynamoDb(port = 8321, embeddedDynamoDbInitializers = {ProductsTableInitializer.class, ProductsDataInitializer.class})
+public class Example4 {
     @InjectEmbeddedDynamoDbClient
     private AmazonDynamoDB embeddedDynamoDBClient;
 

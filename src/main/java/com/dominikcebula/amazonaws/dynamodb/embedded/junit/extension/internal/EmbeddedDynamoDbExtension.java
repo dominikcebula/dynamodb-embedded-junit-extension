@@ -44,7 +44,7 @@ public class EmbeddedDynamoDbExtension implements BeforeEachCallback, AfterEachC
     }
 
     private void executeEmbeddedDynamoDbInitializers(ExtensionContext extensionContext, int embeddedDynamoDbPort) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        AmazonDynamoDB amazonDynamoDB = new EmbeddedAmazonDynamoDBClientFactory()
+        AmazonDynamoDB amazonDynamoDB = new EmbeddedDynamoDBClientFactory()
                 .create(embeddedDynamoDbPort);
 
         WithEmbeddedDynamoDb withEmbeddedDynamoDbAnnotation = getWithEmbeddedDynamoDbAnnotation(extensionContext);

@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import static com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.examples.Example2.ProductsTableInitializer;
 import static org.assertj.core.api.Assertions.assertThat;
 
+// Shows usage of embeddedDynamoDbInitializers together with @WithEmbeddedDynamoDb
+// and @InjectEmbeddedDynamoDbClient annotations. Implemented ProductsTableInitializer initializes DynamoDb Table.
 @WithEmbeddedDynamoDb(embeddedDynamoDbInitializers = {ProductsTableInitializer.class})
 public class Example2 {
     @InjectEmbeddedDynamoDbClient

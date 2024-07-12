@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+// Shows basic usage of @WithEmbeddedDynamoDb annotation
+// and @InjectEmbeddedDynamoDbClient annotation to have Embedded Dynamo DB Client injected.
 @WithEmbeddedDynamoDb
 public class Example1 {
     @InjectEmbeddedDynamoDbClient

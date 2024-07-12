@@ -15,6 +15,9 @@ import static com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.inte
 import static com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.examples.Example3.ProductsTableInitializer;
 import static org.assertj.core.api.Assertions.assertThat;
 
+// Shows usage of multiple embeddedDynamoDbInitializers together with @WithEmbeddedDynamoDb
+// and @InjectEmbeddedDynamoDbClient annotations. Implemented ProductsTableInitializer initializes DynamoDb Table,
+// and ProductsDataInitializer inserts sample data.
 @WithEmbeddedDynamoDb(embeddedDynamoDbInitializers = {ProductsTableInitializer.class, ProductsDataInitializer.class})
 public class Example3 {
     @InjectEmbeddedDynamoDbClient

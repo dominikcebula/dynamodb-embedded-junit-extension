@@ -15,6 +15,8 @@ import static com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.inte
 import static com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.examples.Example6.ProductsTableInitializer;
 import static org.assertj.core.api.Assertions.assertThat;
 
+// Shows how to create Embedded Dynamo DB Client programmatically using EmbeddedDynamoDBClientFactory,
+// by specifying port manually as an argument to the create method.
 @WithEmbeddedDynamoDb(port = 8321, embeddedDynamoDbInitializers = {ProductsTableInitializer.class, ProductsDataInitializer.class})
 public class Example6 {
     @Test

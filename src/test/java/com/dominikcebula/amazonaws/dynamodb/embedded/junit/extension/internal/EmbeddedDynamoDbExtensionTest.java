@@ -3,6 +3,7 @@ package com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.InjectEmbeddedDynamoDb;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.WithEmbeddedDynamoDb;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.dto.Product;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.initializers.EmbeddedDynamoDbDataInitializer;
@@ -55,6 +56,28 @@ class EmbeddedDynamoDbExtensionTest {
         @Override
         AmazonDynamoDB getAmazonDynamoDB() {
             return new EmbeddedDynamoDBClientFactory().create();
+        }
+    }
+
+    @Nested
+    @WithEmbeddedDynamoDb
+    class InjectionTests extends TestCases {
+        @InjectEmbeddedDynamoDb
+        private AmazonDynamoDB amazonDynamoDB1;
+        @InjectEmbeddedDynamoDb
+        private AmazonDynamoDB amazonDynamoDB2;
+        @InjectEmbeddedDynamoDb
+        private AmazonDynamoDB amazonDynamoDB3;
+
+        @Override
+        AmazonDynamoDB getAmazonDynamoDB() {
+            return amazonDynamoDB1;
+        }
+
+        @Test
+        void shouldInjectTheSameClient() {
+            assertThat(amazonDynamoDB1).isSameAs(amazonDynamoDB2);
+            assertThat(amazonDynamoDB2).isSameAs(amazonDynamoDB3);
         }
     }
 

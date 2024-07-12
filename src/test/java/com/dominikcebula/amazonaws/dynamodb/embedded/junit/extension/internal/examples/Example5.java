@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @WithEmbeddedDynamoDb(port = 8321, embeddedDynamoDbInitializers = {ProductsTableInitializer.class, ProductsDataInitializer.class})
 public class Example5 {
     @Test
-    void shouldSaveProductData() {
+    void shouldLoadProductsData() {
         // given
         AmazonDynamoDB embeddedDynamoDBClient = new EmbeddedDynamoDBClientFactory().create();
         DynamoDBMapper dynamoDBMapper = new DynamoDBMapper(embeddedDynamoDBClient);

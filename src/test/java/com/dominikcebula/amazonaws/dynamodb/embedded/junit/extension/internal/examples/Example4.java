@@ -22,7 +22,7 @@ public class Example4 {
     private AmazonDynamoDB embeddedDynamoDBClient;
 
     @Test
-    void shouldSaveProductData() {
+    void shouldLoadProductsData() {
         // given
         DynamoDBMapper dynamoDBMapper = new DynamoDBMapper(embeddedDynamoDBClient);
 

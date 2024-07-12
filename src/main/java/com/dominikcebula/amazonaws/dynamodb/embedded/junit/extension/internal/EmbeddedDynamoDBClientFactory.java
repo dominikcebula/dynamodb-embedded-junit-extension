@@ -5,6 +5,10 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 
 public class EmbeddedDynamoDBClientFactory {
+    public AmazonDynamoDB create() {
+        return create(EmbeddedDynamoDBPortHolder.getPort());
+    }
+
     public AmazonDynamoDB create(int embeddedDynamoDbPort) {
         return AmazonDynamoDBClientBuilder.standard()
                 .withEndpointConfiguration(

@@ -4,7 +4,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.local.main.ServerRunner;
 import com.amazonaws.services.dynamodbv2.local.server.DynamoDBProxyServer;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.EmbeddedDynamoDbInitializer;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.InjectEmbeddedDynamoDb;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.InjectEmbeddedDynamoDbClient;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.WithEmbeddedDynamoDb;
 import org.apache.commons.cli.ParseException;
 import org.junit.jupiter.api.extension.AfterEachCallback;
@@ -74,7 +74,7 @@ public class EmbeddedDynamoDbExtension implements BeforeEachCallback, AfterEachC
                 .map(Class::getDeclaredFields)
                 .stream()
                 .flatMap(Arrays::stream)
-                .filter(field -> field.isAnnotationPresent(InjectEmbeddedDynamoDb.class))
+                .filter(field -> field.isAnnotationPresent(InjectEmbeddedDynamoDbClient.class))
                 .forEach(field -> injectEmbeddedDynamoDbClient(field, extensionContext, embeddedDynamoDBClient));
     }
 

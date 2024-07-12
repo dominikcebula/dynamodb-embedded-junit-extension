@@ -3,7 +3,7 @@ package com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.InjectEmbeddedDynamoDb;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.InjectEmbeddedDynamoDbClient;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.WithEmbeddedDynamoDb;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.dto.Product;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.initializers.EmbeddedDynamoDbDataInitializer;
@@ -62,11 +62,11 @@ class EmbeddedDynamoDbExtensionTest {
     @Nested
     @WithEmbeddedDynamoDb
     class InjectionTests extends TestCases {
-        @InjectEmbeddedDynamoDb
+        @InjectEmbeddedDynamoDbClient
         private AmazonDynamoDB amazonDynamoDB1;
-        @InjectEmbeddedDynamoDb
+        @InjectEmbeddedDynamoDbClient
         private AmazonDynamoDB amazonDynamoDB2;
-        @InjectEmbeddedDynamoDb
+        @InjectEmbeddedDynamoDbClient
         private AmazonDynamoDB amazonDynamoDB3;
 
         @Override

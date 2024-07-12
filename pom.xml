@@ -8,7 +8,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <name>dynamodb-embedded-junit-extension</name>
-    <description>JUnit 5 extension allowing you to run an embedded DynamoDB during unit tests.</description>
+    <description>JUnit 5 extension allowing you to run an Embedded DynamoDB during unit tests.</description>
     <url>https://github.com/dominikcebula/dynamodb-embedded-junit-extension</url>
 
     <licenses>

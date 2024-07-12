@@ -5,6 +5,8 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.WithEmbeddedDynamoDb;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.dto.Product;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.initializers.EmbeddedDynamoDbDataInitializer;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.initializers.EmbeddedDynamoDbTablesInitializer;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.sample.data.SampleData;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.sample.data.SampleTables;
 import org.junit.jupiter.api.Nested;
@@ -53,6 +55,48 @@ class EmbeddedDynamoDbExtensionTest {
         @Override
         AmazonDynamoDB getAmazonDynamoDB() {
             return new EmbeddedDynamoDBClientFactory().create();
+        }
+    }
+
+    @Nested
+    @WithEmbeddedDynamoDb(embeddedDynamoDbInitializers = {EmbeddedDynamoDbTablesInitializer.class})
+    class TablesInitializerTests {
+        @Test
+        void shouldCreateTablesOnEmbeddedDb() {
+            AmazonDynamoDB amazonDynamoDB = new EmbeddedDynamoDBClientFactory().create();
+
+            assertThat(amazonDynamoDB.listTables().getTableNames())
+                    .containsOnly(
+                            "products",
+                            "customers",
+                            "carts"
+                    );
+        }
+    }
+
+    @Nested
+    @WithEmbeddedDynamoDb(embeddedDynamoDbInitializers = {EmbeddedDynamoDbTablesInitializer.class, EmbeddedDynamoDbDataInitializer.class})
+    class TablesAndDataInitializerTests {
+        @Test
+        void shouldCreateTablesAndDataOnEmbeddedDb() {
+            AmazonDynamoDB amazonDynamoDB = new EmbeddedDynamoDBClientFactory().create();
+            DynamoDBMapper mapper = new DynamoDBMapper(amazonDynamoDB);
+
+            List<Product> products = mapper.scan(Product.class, new DynamoDBScanExpression());
+
+            assertThat(products)
+                    .containsOnly(
+                            new Product(1, "Smartphone",
+                                    "Latest model with 6.5-inch display and 128GB storage", "electronics",
+                                    "electronics-smartphone-001", new BigDecimal("699.99")
+                            ),
+                            new Product(2, "Running Shoes",
+                                    "Comfortable and lightweight running shoes", "sports",
+                                    "sports-runningshoes-002", new BigDecimal("89.99")),
+                            new Product(3, "Dining Table",
+                                    "Wooden dining table with a seating capacity of 6", "furniture",
+                                    "furniture-diningtable-003", new BigDecimal("299.99"))
+                    );
         }
     }
 

@@ -29,6 +29,7 @@ public class EmbeddedDynamoDbExtension implements BeforeEachCallback, AfterEachC
     @Override
     public void afterEach(ExtensionContext extensionContext) throws Exception {
         embeddedDynamoDb.stop();
+        EmbeddedDynamoDBPortHolder.clearPort();
     }
 
     private int getEmbeddedDynamoDbPort(ExtensionContext extensionContext) {

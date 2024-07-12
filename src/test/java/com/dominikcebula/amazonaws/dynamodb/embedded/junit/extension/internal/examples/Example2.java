@@ -6,19 +6,19 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.model.*;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.EmbeddedDynamoDbInitializer;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.InjectEmbeddedDynamoDbClient;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.WithEmbeddedDynamoDb;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.EmbeddedDynamoDBInitializer;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.InjectEmbeddedDynamoDBClient;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.WithEmbeddedDynamoDB;
 import org.junit.jupiter.api.Test;
 
 import static com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.examples.Example2.ProductsTableInitializer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-// Shows usage of embeddedDynamoDbInitializers together with @WithEmbeddedDynamoDb
-// and @InjectEmbeddedDynamoDbClient annotations. Implemented ProductsTableInitializer initializes DynamoDb Table.
-@WithEmbeddedDynamoDb(embeddedDynamoDbInitializers = {ProductsTableInitializer.class})
+// Shows usage of embeddedDynamoDBInitializers together with @WithEmbeddedDynamoDB
+// and @InjectEmbeddedDynamoDBClient annotations. Implemented ProductsTableInitializer initializes DynamoDB Table.
+@WithEmbeddedDynamoDB(embeddedDynamoDBInitializers = {ProductsTableInitializer.class})
 public class Example2 {
-    @InjectEmbeddedDynamoDbClient
+    @InjectEmbeddedDynamoDBClient
     private AmazonDynamoDB embeddedDynamoDBClient;
 
     @Test
@@ -37,7 +37,7 @@ public class Example2 {
         assertThat(loadedProduct.getName()).isEqualTo("Smartphone");
     }
 
-    public static class ProductsTableInitializer implements EmbeddedDynamoDbInitializer {
+    public static class ProductsTableInitializer implements EmbeddedDynamoDBInitializer {
         @Override
         public void initialize(AmazonDynamoDB embeddedAmazonDynamoDB) {
             CreateTableRequest createTableRequest = new CreateTableRequest()

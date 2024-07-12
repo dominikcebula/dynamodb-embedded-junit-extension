@@ -9,10 +9,10 @@ public class EmbeddedDynamoDBClientFactory {
         return create(EmbeddedDynamoDBPortHolder.getPort());
     }
 
-    public AmazonDynamoDB create(int embeddedDynamoDbPort) {
+    public AmazonDynamoDB create(int embeddedDynamoDBPort) {
         return AmazonDynamoDBClientBuilder.standard()
                 .withEndpointConfiguration(
-                        getEndpointConfiguration(embeddedDynamoDbPort)
+                        getEndpointConfiguration(embeddedDynamoDBPort)
                 )
                 .build();
     }

@@ -6,17 +6,17 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.model.*;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.InjectEmbeddedDynamoDbClient;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.WithEmbeddedDynamoDb;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.InjectEmbeddedDynamoDBClient;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.WithEmbeddedDynamoDB;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-// Shows basic usage of @WithEmbeddedDynamoDb annotation
-// and @InjectEmbeddedDynamoDbClient annotation to have Embedded Dynamo DB Client injected.
-@WithEmbeddedDynamoDb
+// Shows basic usage of @WithEmbeddedDynamoDB annotation
+// and @InjectEmbeddedDynamoDBClient annotation to have Embedded Dynamo DB Client injected.
+@WithEmbeddedDynamoDB
 public class Example1 {
-    @InjectEmbeddedDynamoDbClient
+    @InjectEmbeddedDynamoDBClient
     private AmazonDynamoDB embeddedDynamoDBClient;
 
     @Test

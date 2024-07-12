@@ -3,9 +3,9 @@ package com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.e
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.amazonaws.services.dynamodbv2.model.*;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.EmbeddedDynamoDbInitializer;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.InjectEmbeddedDynamoDbClient;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.WithEmbeddedDynamoDb;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.EmbeddedDynamoDBInitializer;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.InjectEmbeddedDynamoDBClient;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.WithEmbeddedDynamoDB;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -15,12 +15,12 @@ import static com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.inte
 import static com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.examples.Example3.ProductsTableInitializer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-// Shows usage of multiple embeddedDynamoDbInitializers together with @WithEmbeddedDynamoDb
-// and @InjectEmbeddedDynamoDbClient annotations. Implemented ProductsTableInitializer initializes DynamoDb Table,
+// Shows usage of multiple embeddedDynamoDBInitializers together with @WithEmbeddedDynamoDB
+// and @InjectEmbeddedDynamoDBClient annotations. Implemented ProductsTableInitializer initializes DynamoDB Table,
 // and ProductsDataInitializer inserts sample data.
-@WithEmbeddedDynamoDb(embeddedDynamoDbInitializers = {ProductsTableInitializer.class, ProductsDataInitializer.class})
+@WithEmbeddedDynamoDB(embeddedDynamoDBInitializers = {ProductsTableInitializer.class, ProductsDataInitializer.class})
 public class Example3 {
-    @InjectEmbeddedDynamoDbClient
+    @InjectEmbeddedDynamoDBClient
     private AmazonDynamoDB embeddedDynamoDBClient;
 
     @Test
@@ -39,7 +39,7 @@ public class Example3 {
         );
     }
 
-    public static class ProductsTableInitializer implements EmbeddedDynamoDbInitializer {
+    public static class ProductsTableInitializer implements EmbeddedDynamoDBInitializer {
         @Override
         public void initialize(AmazonDynamoDB embeddedAmazonDynamoDB) {
             CreateTableRequest createTableRequest = new CreateTableRequest()
@@ -55,7 +55,7 @@ public class Example3 {
         }
     }
 
-    public static class ProductsDataInitializer implements EmbeddedDynamoDbInitializer {
+    public static class ProductsDataInitializer implements EmbeddedDynamoDBInitializer {
         @Override
         public void initialize(AmazonDynamoDB embeddedAmazonDynamoDB) {
             DynamoDBMapper dynamoDBMapper = new DynamoDBMapper(embeddedAmazonDynamoDB);

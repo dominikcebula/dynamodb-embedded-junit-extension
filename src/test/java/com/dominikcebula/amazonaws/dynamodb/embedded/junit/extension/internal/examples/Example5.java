@@ -3,8 +3,8 @@ package com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.e
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.amazonaws.services.dynamodbv2.model.*;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.EmbeddedDynamoDbInitializer;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.WithEmbeddedDynamoDb;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.EmbeddedDynamoDBInitializer;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.WithEmbeddedDynamoDB;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.EmbeddedDynamoDBClientFactory;
 import org.junit.jupiter.api.Test;
 
@@ -16,8 +16,8 @@ import static com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.inte
 import static org.assertj.core.api.Assertions.assertThat;
 
 // Shows how to create Embedded Dynamo DB Client programmatically using EmbeddedDynamoDBClientFactory,
-// port is automatically taken from @WithEmbeddedDynamoDb annotation
-@WithEmbeddedDynamoDb(port = 8321, embeddedDynamoDbInitializers = {ProductsTableInitializer.class, ProductsDataInitializer.class})
+// port is automatically taken from @WithEmbeddedDynamoDB annotation
+@WithEmbeddedDynamoDB(port = 8321, embeddedDynamoDBInitializers = {ProductsTableInitializer.class, ProductsDataInitializer.class})
 public class Example5 {
     @Test
     void shouldLoadProductsData() {
@@ -36,7 +36,7 @@ public class Example5 {
         );
     }
 
-    public static class ProductsTableInitializer implements EmbeddedDynamoDbInitializer {
+    public static class ProductsTableInitializer implements EmbeddedDynamoDBInitializer {
         @Override
         public void initialize(AmazonDynamoDB embeddedAmazonDynamoDB) {
             CreateTableRequest createTableRequest = new CreateTableRequest()
@@ -52,7 +52,7 @@ public class Example5 {
         }
     }
 
-    public static class ProductsDataInitializer implements EmbeddedDynamoDbInitializer {
+    public static class ProductsDataInitializer implements EmbeddedDynamoDBInitializer {
         @Override
         public void initialize(AmazonDynamoDB embeddedAmazonDynamoDB) {
             DynamoDBMapper dynamoDBMapper = new DynamoDBMapper(embeddedAmazonDynamoDB);

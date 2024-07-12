@@ -3,9 +3,9 @@ package com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.local.main.ServerRunner;
 import com.amazonaws.services.dynamodbv2.local.server.DynamoDBProxyServer;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.EmbeddedDynamoDbInitializer;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.InjectEmbeddedDynamoDbClient;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.WithEmbeddedDynamoDb;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.EmbeddedDynamoDBInitializer;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.InjectEmbeddedDynamoDBClient;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.WithEmbeddedDynamoDB;
 import org.apache.commons.cli.ParseException;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 
-public class EmbeddedDynamoDbExtension implements BeforeEachCallback, AfterEachCallback {
+public class EmbeddedDynamoDBExtension implements BeforeEachCallback, AfterEachCallback {
     private DynamoDBProxyServer embeddedDynamoDb;
 
     @Override
@@ -39,8 +39,8 @@ public class EmbeddedDynamoDbExtension implements BeforeEachCallback, AfterEachC
 
     private int getEmbeddedDynamoDbPort(ExtensionContext extensionContext) {
         return extensionContext.getTestClass()
-                .map(testClass -> testClass.getAnnotation(WithEmbeddedDynamoDb.class))
-                .map(WithEmbeddedDynamoDb::port)
+                .map(testClass -> testClass.getAnnotation(WithEmbeddedDynamoDB.class))
+                .map(WithEmbeddedDynamoDB::port)
                 .orElseThrow(() -> new IllegalStateException("Unable to extract Embedded DynamoDB port from test class"));
     }
 
@@ -56,8 +56,8 @@ public class EmbeddedDynamoDbExtension implements BeforeEachCallback, AfterEachC
     }
 
     private void executeEmbeddedDynamoDbInitializers(ExtensionContext extensionContext, AmazonDynamoDB embeddedDynamoDBClient) {
-        WithEmbeddedDynamoDb withEmbeddedDynamoDbAnnotation = getWithEmbeddedDynamoDbAnnotation(extensionContext);
-        for (Class<? extends EmbeddedDynamoDbInitializer> embeddedDynamoDbInitializerClass : withEmbeddedDynamoDbAnnotation.embeddedDynamoDbInitializers()) {
+        WithEmbeddedDynamoDB withEmbeddedDynamoDBAnnotation = getWithEmbeddedDynamoDbAnnotation(extensionContext);
+        for (Class<? extends EmbeddedDynamoDBInitializer> embeddedDynamoDbInitializerClass : withEmbeddedDynamoDBAnnotation.embeddedDynamoDBInitializers()) {
             try {
                 embeddedDynamoDbInitializerClass.getConstructor().newInstance().initialize(embeddedDynamoDBClient);
             } catch (Exception e) {
@@ -67,10 +67,10 @@ public class EmbeddedDynamoDbExtension implements BeforeEachCallback, AfterEachC
         }
     }
 
-    private WithEmbeddedDynamoDb getWithEmbeddedDynamoDbAnnotation(ExtensionContext extensionContext) {
+    private WithEmbeddedDynamoDB getWithEmbeddedDynamoDbAnnotation(ExtensionContext extensionContext) {
         return extensionContext.getTestClass()
-                .map(aClass -> aClass.getAnnotation(WithEmbeddedDynamoDb.class))
-                .orElseThrow(() -> new IllegalStateException("Unable to extract annotation " + WithEmbeddedDynamoDb.class.getSimpleName()));
+                .map(aClass -> aClass.getAnnotation(WithEmbeddedDynamoDB.class))
+                .orElseThrow(() -> new IllegalStateException("Unable to extract annotation " + WithEmbeddedDynamoDB.class.getSimpleName()));
     }
 
     private void injectEmbeddedDynamoDbClient(ExtensionContext extensionContext, AmazonDynamoDB embeddedDynamoDBClient) {
@@ -78,7 +78,7 @@ public class EmbeddedDynamoDbExtension implements BeforeEachCallback, AfterEachC
                 .map(Class::getDeclaredFields)
                 .stream()
                 .flatMap(Arrays::stream)
-                .filter(field -> field.isAnnotationPresent(InjectEmbeddedDynamoDbClient.class))
+                .filter(field -> field.isAnnotationPresent(InjectEmbeddedDynamoDBClient.class))
                 .forEach(field -> injectEmbeddedDynamoDbClient(field, extensionContext, embeddedDynamoDBClient));
     }
 

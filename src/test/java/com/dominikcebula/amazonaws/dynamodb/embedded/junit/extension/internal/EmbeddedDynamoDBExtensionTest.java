@@ -3,11 +3,11 @@ package com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.InjectEmbeddedDynamoDbClient;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.WithEmbeddedDynamoDb;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.InjectEmbeddedDynamoDBClient;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.WithEmbeddedDynamoDB;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.dto.Product;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.initializers.EmbeddedDynamoDbDataInitializer;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.initializers.EmbeddedDynamoDbTablesInitializer;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.initializers.EmbeddedDynamoDBDataInitializer;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.initializers.EmbeddedDynamoDBTablesInitializer;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.sample.data.SampleData;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.sample.data.SampleTables;
 import org.junit.jupiter.api.Nested;
@@ -20,9 +20,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
-class EmbeddedDynamoDbExtensionTest {
+class EmbeddedDynamoDBExtensionTest {
     @Nested
-    @WithEmbeddedDynamoDb
+    @WithEmbeddedDynamoDB
     class DefaultPortTests extends TestCases {
         @Override
         AmazonDynamoDB getAmazonDynamoDB() {
@@ -31,7 +31,7 @@ class EmbeddedDynamoDbExtensionTest {
     }
 
     @Nested
-    @WithEmbeddedDynamoDb(port = DefinedPortTests.DEFINED_PORT)
+    @WithEmbeddedDynamoDB(port = DefinedPortTests.DEFINED_PORT)
     class DefinedPortTests extends TestCases {
         private static final int DEFINED_PORT = 8295;
 
@@ -42,7 +42,7 @@ class EmbeddedDynamoDbExtensionTest {
     }
 
     @Nested
-    @WithEmbeddedDynamoDb
+    @WithEmbeddedDynamoDB
     class DefaultPortWithPortHolderTests extends TestCases {
         @Override
         AmazonDynamoDB getAmazonDynamoDB() {
@@ -51,7 +51,7 @@ class EmbeddedDynamoDbExtensionTest {
     }
 
     @Nested
-    @WithEmbeddedDynamoDb(port = 8762)
+    @WithEmbeddedDynamoDB(port = 8762)
     class DefinedPortWithPortHolderTests extends TestCases {
         @Override
         AmazonDynamoDB getAmazonDynamoDB() {
@@ -60,13 +60,13 @@ class EmbeddedDynamoDbExtensionTest {
     }
 
     @Nested
-    @WithEmbeddedDynamoDb
+    @WithEmbeddedDynamoDB
     class InjectionTests extends TestCases {
-        @InjectEmbeddedDynamoDbClient
+        @InjectEmbeddedDynamoDBClient
         private AmazonDynamoDB amazonDynamoDB1;
-        @InjectEmbeddedDynamoDbClient
+        @InjectEmbeddedDynamoDBClient
         private AmazonDynamoDB amazonDynamoDB2;
-        @InjectEmbeddedDynamoDbClient
+        @InjectEmbeddedDynamoDBClient
         private AmazonDynamoDB amazonDynamoDB3;
 
         @Override
@@ -82,10 +82,10 @@ class EmbeddedDynamoDbExtensionTest {
     }
 
     @Nested
-    @WithEmbeddedDynamoDb(embeddedDynamoDbInitializers = {EmbeddedDynamoDbTablesInitializer.class})
+    @WithEmbeddedDynamoDB(embeddedDynamoDBInitializers = {EmbeddedDynamoDBTablesInitializer.class})
     class TablesInitializerTests {
         @Test
-        void shouldCreateTablesOnEmbeddedDb() {
+        void shouldCreateTablesOnEmbeddedDB() {
             AmazonDynamoDB amazonDynamoDB = new EmbeddedDynamoDBClientFactory().create();
 
             assertThat(amazonDynamoDB.listTables().getTableNames())
@@ -98,10 +98,10 @@ class EmbeddedDynamoDbExtensionTest {
     }
 
     @Nested
-    @WithEmbeddedDynamoDb(embeddedDynamoDbInitializers = {EmbeddedDynamoDbTablesInitializer.class, EmbeddedDynamoDbDataInitializer.class})
+    @WithEmbeddedDynamoDB(embeddedDynamoDBInitializers = {EmbeddedDynamoDBTablesInitializer.class, EmbeddedDynamoDBDataInitializer.class})
     class TablesAndDataInitializerTests {
         @Test
-        void shouldCreateTablesAndDataOnEmbeddedDb() {
+        void shouldCreateTablesAndDataOnEmbeddedDB() {
             AmazonDynamoDB amazonDynamoDB = new EmbeddedDynamoDBClientFactory().create();
             DynamoDBMapper mapper = new DynamoDBMapper(amazonDynamoDB);
 
@@ -127,14 +127,14 @@ class EmbeddedDynamoDbExtensionTest {
         abstract AmazonDynamoDB getAmazonDynamoDB();
 
         @Test
-        void shouldConnectToEmbeddedDb() {
+        void shouldConnectToEmbeddedDB() {
             AmazonDynamoDB amazonDynamoDB = getAmazonDynamoDB();
 
             assertNotNull(amazonDynamoDB.listTables());
         }
 
         @Test
-        void shouldCreateTablesOnEmbeddedDb() {
+        void shouldCreateTablesOnEmbeddedDB() {
             AmazonDynamoDB amazonDynamoDB = getAmazonDynamoDB();
 
             SampleTables.initialize(amazonDynamoDB);

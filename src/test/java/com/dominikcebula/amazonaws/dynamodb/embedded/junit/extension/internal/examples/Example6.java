@@ -3,8 +3,8 @@ package com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.e
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.amazonaws.services.dynamodbv2.model.*;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.EmbeddedDynamoDbInitializer;
-import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.WithEmbeddedDynamoDb;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.EmbeddedDynamoDBInitializer;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.WithEmbeddedDynamoDB;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.EmbeddedDynamoDBClientFactory;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 // Shows how to create Embedded Dynamo DB Client programmatically using EmbeddedDynamoDBClientFactory,
 // by specifying port manually as an argument to the create method.
-@WithEmbeddedDynamoDb(port = 8321, embeddedDynamoDbInitializers = {ProductsTableInitializer.class, ProductsDataInitializer.class})
+@WithEmbeddedDynamoDB(port = 8321, embeddedDynamoDBInitializers = {ProductsTableInitializer.class, ProductsDataInitializer.class})
 public class Example6 {
     @Test
     void shouldLoadProductsData() {
@@ -36,7 +36,7 @@ public class Example6 {
         );
     }
 
-    public static class ProductsTableInitializer implements EmbeddedDynamoDbInitializer {
+    public static class ProductsTableInitializer implements EmbeddedDynamoDBInitializer {
         @Override
         public void initialize(AmazonDynamoDB embeddedAmazonDynamoDB) {
             CreateTableRequest createTableRequest = new CreateTableRequest()
@@ -52,7 +52,7 @@ public class Example6 {
         }
     }
 
-    public static class ProductsDataInitializer implements EmbeddedDynamoDbInitializer {
+    public static class ProductsDataInitializer implements EmbeddedDynamoDBInitializer {
         @Override
         public void initialize(AmazonDynamoDB embeddedAmazonDynamoDB) {
             DynamoDBMapper dynamoDBMapper = new DynamoDBMapper(embeddedAmazonDynamoDB);

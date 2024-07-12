@@ -12,7 +12,6 @@ import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
 public class EmbeddedDynamoDbExtension implements BeforeEachCallback, AfterEachCallback {
@@ -56,10 +55,15 @@ public class EmbeddedDynamoDbExtension implements BeforeEachCallback, AfterEachC
                 .create(embeddedDynamoDbPort);
     }
 
-    private void executeEmbeddedDynamoDbInitializers(ExtensionContext extensionContext, AmazonDynamoDB embeddedDynamoDBClient) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    private void executeEmbeddedDynamoDbInitializers(ExtensionContext extensionContext, AmazonDynamoDB embeddedDynamoDBClient) {
         WithEmbeddedDynamoDb withEmbeddedDynamoDbAnnotation = getWithEmbeddedDynamoDbAnnotation(extensionContext);
         for (Class<? extends EmbeddedDynamoDbInitializer> embeddedDynamoDbInitializerClass : withEmbeddedDynamoDbAnnotation.embeddedDynamoDbInitializers()) {
-            embeddedDynamoDbInitializerClass.getConstructor().newInstance().initialize(embeddedDynamoDBClient);
+            try {
+                embeddedDynamoDbInitializerClass.getConstructor().newInstance().initialize(embeddedDynamoDBClient);
+            } catch (Exception e) {
+                throw new IllegalStateException("Unable to create an instance of a class " + embeddedDynamoDbInitializerClass.getSimpleName() +
+                        ". Make sure that class has non-argument constructor and class is public.");
+            }
         }
     }
 

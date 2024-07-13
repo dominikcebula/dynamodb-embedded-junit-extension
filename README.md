@@ -25,7 +25,7 @@ Add Maven dependency to the following artifact:
 <dependency>
     <groupId>com.dominikcebula.amazonaws.dynamodb.embedded</groupId>
     <artifactId>dynamodb-embedded-junit-extension</artifactId>
-    <version>1.0</version>
+  <version>1.1</version>
     <scope>test</scope>
 </dependency>
 ```

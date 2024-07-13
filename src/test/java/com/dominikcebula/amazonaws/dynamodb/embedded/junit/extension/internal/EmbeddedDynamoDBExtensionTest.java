@@ -10,6 +10,7 @@ import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.in
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.initializers.EmbeddedDynamoDBTablesInitializer;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.sample.data.SampleData;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.sample.data.SampleTables;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.utils.EmbeddedDynamoDBClientFactory;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 

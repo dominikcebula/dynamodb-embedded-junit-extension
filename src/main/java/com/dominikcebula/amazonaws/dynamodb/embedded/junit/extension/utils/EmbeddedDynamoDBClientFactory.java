@@ -1,10 +1,11 @@
-package com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal;
+package com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.utils;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.internal.EmbeddedDynamoDBPortHolder;
 
 public class EmbeddedDynamoDBClientFactory {
     public AmazonDynamoDB create() {

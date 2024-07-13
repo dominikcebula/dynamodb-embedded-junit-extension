@@ -8,7 +8,13 @@ This repository contains a JUnit 5 extension allowing you to run an Embedded Dyn
 
 ## Features
 
-TBD
+* Start / stop Embedded DynamoDB before / after every test using `@WithEmbeddedDynamoDB`
+* Inject Embedded DynamoDB Client into test field using `@InjectEmbeddedDynamoDBClient`
+* Create Embedded DynamoDB Client programmatically using `EmbeddedDynamoDBClientFactory`
+* Define custom port for Embedded DynamoDB using `port` attribute of `@WithEmbeddedDynamoDB`
+* Use custom `EmbeddedDynamoDBInitializer` to initialize Embedded DynamoDB, for example:
+    * Create table definitions
+    * Insert sample data
 
 ## Usage
 

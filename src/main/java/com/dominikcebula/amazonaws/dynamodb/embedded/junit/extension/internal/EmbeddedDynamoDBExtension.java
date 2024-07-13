@@ -29,7 +29,7 @@ public class EmbeddedDynamoDBExtension implements BeforeAllCallback, AfterAllCal
 
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
-        int embeddedDynamoDBPort = getEmbeddedDynamoDBPort(extensionContext);
+        int embeddedDynamoDBPort = EmbeddedDynamoDBPortHolder.getPort();
 
         embeddedDynamoDB = createServerFromCommandLineArgs(embeddedDynamoDBPort);
         embeddedDynamoDB.start();

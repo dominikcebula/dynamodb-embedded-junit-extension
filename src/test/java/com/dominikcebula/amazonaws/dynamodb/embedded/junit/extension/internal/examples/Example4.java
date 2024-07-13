@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 // Shows usage of @WithEmbeddedDynamoDB with defined port instead of default port
 @WithEmbeddedDynamoDB(port = 8321, embeddedDynamoDBInitializers = {ProductsTableInitializer.class, ProductsDataInitializer.class})
-public class Example4 {
+class Example4 {
     @InjectEmbeddedDynamoDBClient
     private AmazonDynamoDB embeddedDynamoDBClient;
 

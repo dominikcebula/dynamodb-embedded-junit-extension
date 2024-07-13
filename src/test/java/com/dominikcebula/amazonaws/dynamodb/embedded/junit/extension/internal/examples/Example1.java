@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 // Shows basic usage of @WithEmbeddedDynamoDB annotation
 // and @InjectEmbeddedDynamoDBClient annotation to have Embedded Dynamo DB Client injected.
 @WithEmbeddedDynamoDB
-public class Example1 {
+class Example1 {
     @InjectEmbeddedDynamoDBClient
     private AmazonDynamoDB embeddedDynamoDBClient;
 

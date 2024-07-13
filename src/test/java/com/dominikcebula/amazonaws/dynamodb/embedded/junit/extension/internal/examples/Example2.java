@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 // Shows usage of embeddedDynamoDBInitializers together with @WithEmbeddedDynamoDB
 // and @InjectEmbeddedDynamoDBClient annotations. Implemented ProductsTableInitializer initializes DynamoDB Table.
 @WithEmbeddedDynamoDB(embeddedDynamoDBInitializers = {ProductsTableInitializer.class})
-public class Example2 {
+class Example2 {
     @InjectEmbeddedDynamoDBClient
     private AmazonDynamoDB embeddedDynamoDBClient;
 

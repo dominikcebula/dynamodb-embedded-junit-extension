@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 // Shows how to create Embedded Dynamo DB Client programmatically using EmbeddedDynamoDBClientFactory,
 // port is automatically taken from @WithEmbeddedDynamoDB annotation
 @WithEmbeddedDynamoDB(port = 8321, embeddedDynamoDBInitializers = {ProductsTableInitializer.class, ProductsDataInitializer.class})
-public class Example5 {
+class Example5 {
     @Test
     void shouldLoadProductsData() {
         // given

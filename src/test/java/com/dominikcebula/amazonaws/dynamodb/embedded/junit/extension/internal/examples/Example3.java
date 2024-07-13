@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 // and @InjectEmbeddedDynamoDBClient annotations. Implemented ProductsTableInitializer initializes DynamoDB Table,
 // and ProductsDataInitializer inserts sample data.
 @WithEmbeddedDynamoDB(embeddedDynamoDBInitializers = {ProductsTableInitializer.class, ProductsDataInitializer.class})
-public class Example3 {
+class Example3 {
     @InjectEmbeddedDynamoDBClient
     private AmazonDynamoDB embeddedDynamoDBClient;
 

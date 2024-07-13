@@ -18,7 +18,40 @@ This repository contains a JUnit 5 extension allowing you to run an Embedded Dyn
 
 ## Usage
 
-TBD
+Add Maven dependency to the following artifact:
+
+```xml
+
+<dependency>
+    <groupId>com.dominikcebula.amazonaws.dynamodb.embedded</groupId>
+    <artifactId>dynamodb-embedded-junit-extension</artifactId>
+    <version>1.0</version>
+    <scope>test</scope>
+</dependency>
+```
+
+Implement Unit Test with Embedded DynamoDB using `@WithEmbeddedDynamoDB`:
+
+```java
+
+@WithEmbeddedDynamoDB
+class SomeTest {
+    @InjectEmbeddedDynamoDBClient
+    private AmazonDynamoDB embeddedDynamoDBClient;
+
+    @Test
+    void shouldDoSomethingWhenSomeActionExecuted() {
+        // given
+        // ...
+
+        // when
+        // ...
+
+        // then
+        // ...
+    }
+}
+```
 
 ## Examples
 

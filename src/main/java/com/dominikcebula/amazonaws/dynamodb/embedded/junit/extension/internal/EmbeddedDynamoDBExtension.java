@@ -8,37 +8,44 @@ import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.InjectE
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.api.WithEmbeddedDynamoDB;
 import com.dominikcebula.amazonaws.dynamodb.embedded.junit.extension.utils.EmbeddedDynamoDBClientFactory;
 import org.apache.commons.cli.ParseException;
-import org.junit.jupiter.api.extension.AfterEachCallback;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
-import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.*;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
 
-public class EmbeddedDynamoDBExtension implements BeforeEachCallback, AfterEachCallback {
-    private DynamoDBProxyServer embeddedDynamoDb;
+public class EmbeddedDynamoDBExtension implements BeforeAllCallback, AfterAllCallback, BeforeEachCallback, AfterEachCallback {
+    private DynamoDBProxyServer embeddedDynamoDB;
+
+    @Override
+    public void beforeAll(ExtensionContext extensionContext) throws Exception {
+        int embeddedDynamoDBPort = getEmbeddedDynamoDBPort(extensionContext);
+        EmbeddedDynamoDBPortHolder.setPort(embeddedDynamoDBPort);
+    }
+
+    @Override
+    public void afterAll(ExtensionContext extensionContext) throws Exception {
+        EmbeddedDynamoDBPortHolder.clearPort();
+    }
 
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
-        int embeddedDynamoDbPort = getEmbeddedDynamoDbPort(extensionContext);
-        EmbeddedDynamoDBPortHolder.setPort(embeddedDynamoDbPort);
+        int embeddedDynamoDBPort = getEmbeddedDynamoDBPort(extensionContext);
 
-        embeddedDynamoDb = createServerFromCommandLineArgs(embeddedDynamoDbPort);
-        embeddedDynamoDb.start();
+        embeddedDynamoDB = createServerFromCommandLineArgs(embeddedDynamoDBPort);
+        embeddedDynamoDB.start();
 
-        AmazonDynamoDB embeddedDynamoDBClient = createEmbeddedDynamoDBClient(embeddedDynamoDbPort);
+        AmazonDynamoDB embeddedDynamoDBClient = createEmbeddedDynamoDBClient(embeddedDynamoDBPort);
 
-        executeEmbeddedDynamoDbInitializers(extensionContext, embeddedDynamoDBClient);
-        injectEmbeddedDynamoDbClient(extensionContext, embeddedDynamoDBClient);
+        executeEmbeddedDynamoDBInitializers(extensionContext, embeddedDynamoDBClient);
+        injectEmbeddedDynamoDBClient(extensionContext, embeddedDynamoDBClient);
     }
 
     @Override
     public void afterEach(ExtensionContext extensionContext) throws Exception {
-        embeddedDynamoDb.stop();
-        EmbeddedDynamoDBPortHolder.clearPort();
+        embeddedDynamoDB.stop();
     }
 
-    private int getEmbeddedDynamoDbPort(ExtensionContext extensionContext) {
+    private int getEmbeddedDynamoDBPort(ExtensionContext extensionContext) {
         return extensionContext.getTestClass()
                 .map(testClass -> testClass.getAnnotation(WithEmbeddedDynamoDB.class))
                 .map(WithEmbeddedDynamoDB::port)
@@ -51,39 +58,39 @@ public class EmbeddedDynamoDBExtension implements BeforeEachCallback, AfterEachC
         return ServerRunner.createServerFromCommandLineArgs(args);
     }
 
-    private AmazonDynamoDB createEmbeddedDynamoDBClient(int embeddedDynamoDbPort) {
+    private AmazonDynamoDB createEmbeddedDynamoDBClient(int embeddedDynamoDBPort) {
         return new EmbeddedDynamoDBClientFactory()
-                .create(embeddedDynamoDbPort);
+                .create(embeddedDynamoDBPort);
     }
 
-    private void executeEmbeddedDynamoDbInitializers(ExtensionContext extensionContext, AmazonDynamoDB embeddedDynamoDBClient) {
-        WithEmbeddedDynamoDB withEmbeddedDynamoDBAnnotation = getWithEmbeddedDynamoDbAnnotation(extensionContext);
-        for (Class<? extends EmbeddedDynamoDBInitializer> embeddedDynamoDbInitializerClass : withEmbeddedDynamoDBAnnotation.embeddedDynamoDBInitializers()) {
+    private void executeEmbeddedDynamoDBInitializers(ExtensionContext extensionContext, AmazonDynamoDB embeddedDynamoDBClient) {
+        WithEmbeddedDynamoDB withEmbeddedDynamoDBAnnotation = getWithEmbeddedDynamoDBAnnotation(extensionContext);
+        for (Class<? extends EmbeddedDynamoDBInitializer> embeddedDynamoDBInitializerClass : withEmbeddedDynamoDBAnnotation.embeddedDynamoDBInitializers()) {
             try {
-                embeddedDynamoDbInitializerClass.getConstructor().newInstance().initialize(embeddedDynamoDBClient);
+                embeddedDynamoDBInitializerClass.getConstructor().newInstance().initialize(embeddedDynamoDBClient);
             } catch (Exception e) {
-                throw new IllegalStateException("Unable to create an instance of a class " + embeddedDynamoDbInitializerClass.getSimpleName() +
+                throw new IllegalStateException("Unable to create an instance of a class " + embeddedDynamoDBInitializerClass.getSimpleName() +
                         ". Make sure that class has non-argument constructor and class is public.");
             }
         }
     }
 
-    private WithEmbeddedDynamoDB getWithEmbeddedDynamoDbAnnotation(ExtensionContext extensionContext) {
+    private WithEmbeddedDynamoDB getWithEmbeddedDynamoDBAnnotation(ExtensionContext extensionContext) {
         return extensionContext.getTestClass()
                 .map(aClass -> aClass.getAnnotation(WithEmbeddedDynamoDB.class))
                 .orElseThrow(() -> new IllegalStateException("Unable to extract annotation " + WithEmbeddedDynamoDB.class.getSimpleName()));
     }
 
-    private void injectEmbeddedDynamoDbClient(ExtensionContext extensionContext, AmazonDynamoDB embeddedDynamoDBClient) {
+    private void injectEmbeddedDynamoDBClient(ExtensionContext extensionContext, AmazonDynamoDB embeddedDynamoDBClient) {
         extensionContext.getTestClass()
                 .map(Class::getDeclaredFields)
                 .stream()
                 .flatMap(Arrays::stream)
                 .filter(field -> field.isAnnotationPresent(InjectEmbeddedDynamoDBClient.class))
-                .forEach(field -> injectEmbeddedDynamoDbClient(field, extensionContext, embeddedDynamoDBClient));
+                .forEach(field -> injectEmbeddedDynamoDBClient(field, extensionContext, embeddedDynamoDBClient));
     }
 
-    private void injectEmbeddedDynamoDbClient(Field field, ExtensionContext extensionContext, AmazonDynamoDB embeddedDynamoDBClient) {
+    private void injectEmbeddedDynamoDBClient(Field field, ExtensionContext extensionContext, AmazonDynamoDB embeddedDynamoDBClient) {
         try {
             field.setAccessible(true);
             field.set(extensionContext.getRequiredTestInstance(), embeddedDynamoDBClient);

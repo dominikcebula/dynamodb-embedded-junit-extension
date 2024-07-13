@@ -22,11 +22,11 @@ public class EmbeddedDynamoDBClientFactory {
                 .build();
     }
 
-    private EndpointConfiguration getEndpointConfiguration(int embeddedDynamoDbPort) {
-        return new EndpointConfiguration(getEmbeddedDynamoDbEndpoint(embeddedDynamoDbPort), "local");
+    private EndpointConfiguration getEndpointConfiguration(int embeddedDynamoDBPort) {
+        return new EndpointConfiguration(getEmbeddedDynamoDBEndpoint(embeddedDynamoDBPort), "local");
     }
 
-    private String getEmbeddedDynamoDbEndpoint(int embeddedDynamoDbPort) {
-        return "http://localhost:" + embeddedDynamoDbPort;
+    private String getEmbeddedDynamoDBEndpoint(int embeddedDynamoDBPort) {
+        return "http://localhost:" + embeddedDynamoDBPort;
     }
 }

@@ -55,7 +55,12 @@ class SomeTest {
 
 ## Examples
 
-TBD
+* [Basic usage example of `@WithEmbeddedDynamoDB` annotation with `@InjectEmbeddedDynamoDBClient` annotation](src%2Ftest%2Fjava%2Fcom%2Fdominikcebula%2Famazonaws%2Fdynamodb%2Fembedded%2Fjunit%2Fextension%2Finternal%2Fexamples%2FExample1.java)
+* [Embedded Dynamo DB Initializer Usage to initialize table definitions](src%2Ftest%2Fjava%2Fcom%2Fdominikcebula%2Famazonaws%2Fdynamodb%2Fembedded%2Fjunit%2Fextension%2Finternal%2Fexamples%2FExample2.java)
+* [Embedded Dynamo DB Initializers Usage to initialize table definitions and sample data](src%2Ftest%2Fjava%2Fcom%2Fdominikcebula%2Famazonaws%2Fdynamodb%2Fembedded%2Fjunit%2Fextension%2Finternal%2Fexamples%2FExample3.java)
+* [Defined port usage](src%2Ftest%2Fjava%2Fcom%2Fdominikcebula%2Famazonaws%2Fdynamodb%2Fembedded%2Fjunit%2Fextension%2Finternal%2Fexamples%2FExample4.java)
+* [Embedded Dynamo DB Client creation programmatically using `EmbeddedDynamoDBClientFactory`](src%2Ftest%2Fjava%2Fcom%2Fdominikcebula%2Famazonaws%2Fdynamodb%2Fembedded%2Fjunit%2Fextension%2Finternal%2Fexamples%2FExample5.java)
+* [Embedded Dynamo DB Client creation programmatically using `EmbeddedDynamoDBClientFactory` by specifying port manually](src%2Ftest%2Fjava%2Fcom%2Fdominikcebula%2Famazonaws%2Fdynamodb%2Fembedded%2Fjunit%2Fextension%2Finternal%2Fexamples%2FExample6.java)
 
 ## Author
 
